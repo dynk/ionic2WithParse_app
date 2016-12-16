@@ -73,7 +73,7 @@ export class ListPage {
                 }
               }]
             }).present();
-
+            this.getFriends();
           }, err => {
             console.log(err);
             this.alertCtrl.create({
