@@ -32,7 +32,7 @@ export class ListPage {
       this.headers.append("X-Parse-REST-API-Key","restAPIKey");
       this.localStorage.get('user').then((value)=>{
         this.userId = value;
-        this.getFriends();
+        this.getFriends(null);
       })
 
     }
@@ -73,7 +73,7 @@ export class ListPage {
                 }
               }]
             }).present();
-            this.getFriends();
+            this.getFriends(null);
           }, err => {
             console.log(err);
             this.alertCtrl.create({
@@ -89,13 +89,17 @@ export class ListPage {
     }).present();
   }
 
-  getFriends(){
+  getFriends(refresher){
 
     this.url = 'https://ionicwithparse-dynk.c9users.io/app1/classes/friendslist?where={"owner":"'+this.userId+'"}';
 
     this.http.get(this.url, {headers: this.headers}).map(res => res.json()).subscribe(res => {
       console.log(res);
       this.friends = res.results;
+
+      if(refresher !== null)
+        refresher.complete();
+
     }, err => {
       this.alertCtrl.create({
         title: "error",
