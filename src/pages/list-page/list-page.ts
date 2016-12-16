@@ -163,4 +163,41 @@ export class ListPage {
 
   }
 
+  deleteFriend(friend){
+    this.alertCtrl.create({
+      title: "Delete Friend?",
+      message: "Delete your friend",
+      buttons: [{
+        text: "No"
+      },{
+        text: "Yes",
+        handler: () => {
+          // perform update
+          this.url = 'https://ionicwithparse-dynk.c9users.io/app1/classes/friendslist/'+friend.objectId;
+
+          this.http.delete(this.url,{headers: this.headers}).map(res => res.json()).subscribe(
+            res => {
+              console.log(res);
+              this.alertCtrl.create({
+                title: "Success",
+                message: "Friend deleted",
+                buttons: [{
+                  text: "Ok",
+                  handler: () => {
+                    this.getFriends(null);
+                  }
+                }]
+              }).present();
+
+            },
+            err =>{
+              console.log(err);
+            }
+          )
+        }
+      }]
+    }).present();
+
+  }
+
 }
