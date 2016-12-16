@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 import {Http, Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
+import { Storage } from '@ionic/storage';
 /*
   Generated class for the ListPage page.
 
@@ -17,17 +18,23 @@ export class ListPage {
   headers: Headers;
   url: string;
   friends: any[];
+  userId: string;
 
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
     public alertCtrl: AlertController,
-    public http: Http) {
+    public http: Http,
+    public localStorage: Storage) {
       this.headers = new Headers();
       this.headers.append("X-Parse-Application-Id","AppId1");
       this.headers.append("X-Parse-REST-API-Key","restAPIKey");
-      this.getFriends();
+      this.localStorage.get('user').then((value)=>{
+        this.userId = value;
+        this.getFriends();
+      })
+
     }
 
   showAddDialog(){
@@ -53,7 +60,7 @@ export class ListPage {
           //post the information
           this.url = "https://ionicwithparse-dynk.c9users.io/app1/classes/friendslist";
 
-          this.http.post(this.url,{ name: data.name, email: data.email, number: data.number, image: "http://lorempixel.com/32/32" }, {headers: this.headers}).map(res => res.json())
+          this.http.post(this.url,{ owner: this.userId, name: data.name, email: data.email, number: data.number, image: "http://lorempixel.com/32/32" }, {headers: this.headers}).map(res => res.json())
           .subscribe(res => {
             console.log(res);
             this.alertCtrl.create({
@@ -84,7 +91,7 @@ export class ListPage {
 
   getFriends(){
 
-    this.url = "https://ionicwithparse-dynk.c9users.io/app1/classes/friendslist";
+    this.url = 'https://ionicwithparse-dynk.c9users.io/app1/classes/friendslist?where={"owner":"'+this.userId+'"}';
 
     this.http.get(this.url, {headers: this.headers}).map(res => res.json()).subscribe(res => {
       console.log(res);

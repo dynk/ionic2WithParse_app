@@ -5,7 +5,7 @@ import { Http, Headers } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { SignupPage } from '../signup/signup';
 import { ListPage } from '../list-page/list-page';
-
+import { Storage } from '@ionic/storage';
 
 @Component({
   selector: 'page-login',
@@ -22,7 +22,8 @@ export class LoginPage {
   headers: Headers;
   constructor(public navCtrl: NavController,
     public alertCtrl: AlertController,
-    public http: Http) {
+    public http: Http,
+    public localStorage: Storage) {
     this.headers = new Headers();
     this.headers.append("X-Parse-Application-Id","AppId1");
     this.headers.append("X-Parse-REST-API-Key","restAPIKey");
@@ -46,6 +47,9 @@ export class LoginPage {
     this.http.get(this.url,{headers: this.headers}).subscribe(res =>{
       console.log(res);
       //Navigate to other page-login
+      this.localStorage.set('user', res.json().objectId).then( () => {
+        this.navCtrl.setRoot(ListPage);
+      })
       this.navCtrl.setRoot(ListPage);
     }, err=>{
       console.log(err);

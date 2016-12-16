@@ -4,6 +4,7 @@ import { MyApp } from './app.component';
 import { LoginPage } from '../pages/login/login';
 import { SignupPage } from '../pages/signup/signup';
 import { ListPage } from '../pages/list-page/list-page';
+import { Storage } from '@ionic/storage';
 
 
 @NgModule({
@@ -23,6 +24,6 @@ import { ListPage } from '../pages/list-page/list-page';
     SignupPage,
     ListPage
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler}, Storage]
 })
 export class AppModule {}
