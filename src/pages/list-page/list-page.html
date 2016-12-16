@@ -1,0 +1,42 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>welcome</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-fab bottom right>
+    <button ion-fab icon-only (click)="showAddDialog()">
+      <ion-icon name="add"></ion-icon>
+    </button>
+
+  </ion-fab>
+
+  <ion-list>
+    <ion-item-sliding>
+      <ion-item>
+        <ion-avatar item-left>
+          <img src="http://lorempixel.com/32/32" />
+        </ion-avatar>
+        <h2> test</h2>
+        <h3> test@test.com</h3>
+        <p>12341233122</p>
+
+      </ion-item>
+      <ion-item-options side="right">
+        <button ion-button icon-only color="secondary">
+          <ion-icon name="create"></ion-icon>
+        </button>
+        <button color="danger" ion-button icon-only>
+          <ion-icon name="trash"></ion-icon>
+        </button>
+      </ion-item-options>
+    </ion-item-sliding>
+
+  </ion-list>
+
+</ion-content>
