@@ -3,6 +3,7 @@ import { NavController, NavParams, AlertController } from 'ionic-angular';
 import {Http, Headers} from '@angular/http';
 import 'rxjs/add/operator/map';
 import { Storage } from '@ionic/storage';
+import { LoginPage } from '../login/login'
 /*
   Generated class for the ListPage page.
 
@@ -198,6 +199,11 @@ export class ListPage {
       }]
     }).present();
 
+  }
+  logout(){
+    this.localStorage.remove('user').then(() => {
+      this.navCtrl.setRoot(LoginPage);
+    })
   }
 
 }
