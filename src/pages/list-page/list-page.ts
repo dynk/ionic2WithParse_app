@@ -136,6 +136,27 @@ export class ListPage {
         text: "Save",
         handler: data => {
           // perform update
+          this.url = 'https://ionicwithparse-dynk.c9users.io/app1/classes/friendslist/'+friend.objectId;
+
+          this.http.put(this.url,{name: data.name, email: data.email, number: data.number},{headers: this.headers}).map(res => res.json()).subscribe(
+            res => {
+              console.log(res);
+              this.alertCtrl.create({
+                title: "Success",
+                message: "Friend updated",
+                buttons: [{
+                  text: "Ok",
+                  handler: () => {
+                    this.getFriends(null);
+                  }
+                }]
+              }).present();
+
+            },
+            err =>{
+              console.log(err);
+            }
+          )
         }
       }]
     }).present();
