@@ -16,6 +16,7 @@ export class ListPage {
 
   headers: Headers;
   url: string;
+  friends: any[];
 
 
   constructor(
@@ -26,7 +27,7 @@ export class ListPage {
       this.headers = new Headers();
       this.headers.append("X-Parse-Application-Id","AppId1");
       this.headers.append("X-Parse-REST-API-Key","restAPIKey");
-
+      this.getFriends();
     }
 
   showAddDialog(){
@@ -79,6 +80,25 @@ export class ListPage {
         }
       }]
     }).present();
+  }
+
+  getFriends(){
+
+    this.url = "https://ionicwithparse-dynk.c9users.io/app1/classes/friendslist";
+
+    this.http.get(this.url, {headers: this.headers}).map(res => res.json()).subscribe(res => {
+      console.log(res);
+      this.friends = res.results;
+    }, err => {
+      this.alertCtrl.create({
+        title: "error",
+        message: err.text(),
+        buttons: [{
+          text: 'OK'
+        }]
+      }).present();
+    })
+
   }
 
 }
