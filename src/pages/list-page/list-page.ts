@@ -112,4 +112,34 @@ export class ListPage {
 
   }
 
+  editFriend(friend){
+
+    this.alertCtrl.create({
+      title: "Edit Friend",
+      message: "Edit your friend",
+      inputs: [{
+        name: 'name',
+        placeholder: 'Enter the name',
+        value: friend.name
+      },{
+        name: 'email',
+        placeholder: 'Enter the emails',
+        value: friend.email
+      },{
+        name: 'number',
+        placeholder: 'enter the number',
+        value: friend.number
+      }],
+      buttons: [{
+        text: "Cancel"
+      },{
+        text: "Save",
+        handler: data => {
+          // perform update
+        }
+      }]
+    }).present();
+
+  }
+
 }
